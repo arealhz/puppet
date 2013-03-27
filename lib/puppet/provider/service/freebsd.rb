@@ -51,7 +51,7 @@ Puppet::Type.type(:service).provide :freebsd, :parent => :init do
   def rcvar_value
     value = self.rcvar[1]
     self.error("No rcvar value found in rcvar") if value.nil?
-    value = value.gsub!(/(.*)(_enable)?="?(\w+)"?/, '\3')
+    value = value.gsub!(/(.*)(_enable)?="?(\w+)"?/, '\3') ############################### 1 ????
     self.error("rcvar value is empty") if value.nil?
     self.debug("rcvar value is #{value}")
     value
@@ -85,7 +85,7 @@ Puppet::Type.type(:service).provide :freebsd, :parent => :init do
 
   # Add a new setting to the rc files
   def rc_add(service, rcvar, yesno)
-    append = "\# Added by Puppet\n#{rcvar}_enable=\"#{yesno}\"\n"
+    append = "\# Added by Puppet\n#{rcvar}_enable=\"#{yesno}\"\n"   ################################### 2 ???????
     # First, try the one-file-per-service style
     if File.exists?(rcconf_dir)
       File.open(rcconf_dir + "/#{service}", File::WRONLY | File::APPEND | File::CREAT, 0644) {
